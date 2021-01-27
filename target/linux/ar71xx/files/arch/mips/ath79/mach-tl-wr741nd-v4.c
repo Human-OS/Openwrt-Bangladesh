@@ -23,7 +23,7 @@
 #include "machtypes.h"
 
 #define TL_WR741NDV4_GPIO_BTN_RESET	11
-#define TL_WR741NDV4_GPIO_BTN_WPS	26
+#define TL_WR741NDV4_GPIO_BTN_WIFI	26
 
 #define TL_WR741NDV4_GPIO_LED_WLAN	0
 #define TL_WR741NDV4_GPIO_LED_QSS	1
@@ -34,7 +34,7 @@
 #define TL_WR741NDV4_GPIO_LED_LAN4	17
 #define TL_WR741NDV4_GPIO_LED_SYSTEM	27
 
-#define TL_MR3220V2_GPIO_BTN_WPS	11
+#define TL_MR3220V2_GPIO_BTN_RESET	11
 #define TL_MR3220V2_GPIO_BTN_WIFI	24
 
 #define TL_MR3220V2_GPIO_LED_3G		26
@@ -102,22 +102,22 @@ static struct gpio_keys_button tl_wr741ndv4_gpio_keys[] __initdata = {
 		.gpio		= TL_WR741NDV4_GPIO_BTN_RESET,
 		.active_low	= 0,
 	}, {
-		.desc		= "WPS",
+		.desc		= "WIFI button",
 		.type		= EV_KEY,
-		.code		= KEY_WPS_BUTTON,
+		.code		= KEY_RFKILL,
 		.debounce_interval = TL_WR741NDV4_KEYS_DEBOUNCE_INTERVAL,
-		.gpio		= TL_WR741NDV4_GPIO_BTN_WPS,
+		.gpio		= TL_WR741NDV4_GPIO_BTN_WIFI,
 		.active_low	= 0,
 	}
 };
 
 static struct gpio_keys_button tl_mr3220v2_gpio_keys[] __initdata = {
 	{
-		.desc		= "WPS",
+		.desc		= "reset",
 		.type		= EV_KEY,
-		.code		= KEY_WPS_BUTTON,
+		.code		= KEY_RESTART,
 		.debounce_interval = TL_WR741NDV4_KEYS_DEBOUNCE_INTERVAL,
-		.gpio		= TL_MR3220V2_GPIO_BTN_WPS,
+		.gpio		= TL_MR3220V2_GPIO_BTN_RESET,
 		.active_low	= 0,
 	}, {
 		.desc		= "WIFI button",

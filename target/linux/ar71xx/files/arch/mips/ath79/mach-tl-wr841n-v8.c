@@ -33,7 +33,10 @@
 #define TL_WR841NV8_GPIO_LED_SYSTEM	14
 
 #define TL_WR841NV8_GPIO_BTN_RESET	17
-#define TL_WR841NV8_GPIO_SW_RFKILL	16	/* WPS for MR3420 v2 */
+#define TL_WR841NV8_GPIO_BTN_WIFI	16
+
+#define TL_MR3420V2_GPIO_BTN_RESET	17
+#define TL_MR3420V2_GPIO_BTN_WIFI	16
 
 #define TL_MR3420V2_GPIO_LED_3G	11
 #define TL_MR3420V2_GPIO_USB_POWER	4
@@ -79,7 +82,7 @@ static struct gpio_led tl_wr841n_v8_leds_gpio[] __initdata = {
 	}, {
 		.name		= "tp-link:green:qss",
 		.gpio		= TL_WR841NV8_GPIO_LED_QSS,
-		.active_low	= 1,
+		.active_low	= 0,
 	}, {
 		.name		= "tp-link:green:system",
 		.gpio		= TL_WR841NV8_GPIO_LED_SYSTEM,
@@ -109,30 +112,12 @@ static struct gpio_keys_button tl_wr841n_v8_gpio_keys[] __initdata = {
 		.gpio		= TL_WR841NV8_GPIO_BTN_RESET,
 		.active_low	= 1,
 	}, {
-		.desc		= "RFKILL switch",
-		.type		= EV_SW,
+		.desc		= "WIFI button",
+		.type		= EV_KEY,
 		.code		= KEY_RFKILL,
 		.debounce_interval = TL_WR841NV8_KEYS_DEBOUNCE_INTERVAL,
-		.gpio		= TL_WR841NV8_GPIO_SW_RFKILL,
-		.active_low	= 0,
-	}
-};
-
-static struct gpio_keys_button tl_mr3420v2_gpio_keys[] __initdata = {
-	{
-		.desc		= "Reset button",
-		.type		= EV_KEY,
-		.code		= KEY_RESTART,
-		.debounce_interval = TL_WR841NV8_KEYS_DEBOUNCE_INTERVAL,
-		.gpio		= TL_WR841NV8_GPIO_BTN_RESET,
+		.gpio		= TL_WR841NV8_GPIO_BTN_WIFI,
 		.active_low	= 1,
-	}, {
-		.desc		= "WPS",
-		.type		= EV_KEY,
-		.code		= KEY_WPS_BUTTON,
-		.debounce_interval = TL_WR841NV8_KEYS_DEBOUNCE_INTERVAL,
-		.gpio		= TL_WR841NV8_GPIO_SW_RFKILL,
-		.active_low	= 0,
 	}
 };
 
@@ -255,8 +240,8 @@ static void __init tl_mr3420v2_setup(void)
 				tl_wr841n_v8_leds_gpio);
 
 	ath79_register_gpio_keys_polled(1, TL_WR841NV8_KEYS_POLL_INTERVAL,
-				ARRAY_SIZE(tl_mr3420v2_gpio_keys),
-				tl_mr3420v2_gpio_keys);
+					ARRAY_SIZE(tl_wr841n_v8_gpio_keys),
+					tl_wr841n_v8_gpio_keys);
 
 	/* enable power for the USB port */
 	gpio_request_one(TL_MR3420V2_GPIO_USB_POWER,
